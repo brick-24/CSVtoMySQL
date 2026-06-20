@@ -4,7 +4,8 @@ import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "change-me-in-production")
+
 UPLOAD_FOLDER = "uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
@@ -17,32 +18,25 @@ def index():
         database_name = request.form["database"]
         table_name = request.form["table"]
         column_names = request.form["columns"]
-
         file = request.files["file"]
         if file.filename == "":
             flash("No file selected", "danger")
             return redirect(request.url)
-
         filename = secure_filename(file.filename)
         file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-        file.save(file_path)  # Save uploaded file
-
+        file.save(file_path)
         try:
             result = subprocess.run(
-                ["python", "csv_to_mysql.py", database_name, table_name, column_names, file_path],  
+                ["python", "csv_to_mysql.py", database_name, table_name, column_names, file_path],
                 text=True,
                 capture_output=True
             )
-
             flash(result.stdout, "success")
             if result.stderr:
                 flash(result.stderr, "danger")
-
         except Exception as e:
             flash(f"Error: {e}", "danger")
-
         return redirect(url_for("index"))
-
     return render_template("index.html")
 
 if __name__ == "__main__":
