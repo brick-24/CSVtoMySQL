@@ -1,8 +1,11 @@
-# Enter host for your mysql server here, the default is set to localhost replace it if required
-host = "localhost"
+import os
 
-# Enter username for your mysql server
-user = "USERNAME"
+from dotenv import load_dotenv
 
-# Enter password for your mysql server
-password = "PASSWORD"
+load_dotenv()
+
+# MySQL connection settings loaded from environment variables
+# Copy .env.example to .env and fill in your values
+host = os.environ.get("MYSQL_HOST", "localhost")
+user = os.environ.get("MYSQL_USER", "root")
+password = os.environ.get("MYSQL_PASSWORD", "")
