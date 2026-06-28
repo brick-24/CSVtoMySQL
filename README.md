@@ -9,9 +9,16 @@
 
 
 
-# Outdated docs
-CSV to MySQL is a simple Python utility that allows you to import data from a CSV file into a MySQL database. This tool checks if the specified database exists and creates it if it doesn't, then creates a table and imports the data from the CSV file.
-- https://commando2406.github.io/CSVtoMySQL/
+## Documentation
+
+Official documentation is available at:
+https://commando2406.github.io/CSVtoMySQL/
+
+This project helps import CSV data into MySQL database by:
+- Creating database if not exists
+- Creating table from CSV headers
+- Importing CSV data automatically
+
 ## Features
 
 - Connect to MySQL database
@@ -62,18 +69,17 @@ CSV to MySQL is a simple Python utility that allows you to import data from a CS
 4. Prepare your CSV file:
    Ensure you have a CSV file named `main.csv` in the same directory as the script. The CSV file should have a header row with column names matching the ones you will specify in the script.
 
-# Usage
+### Important Notes
+- Ensure MySQL server is running before execution
+- Update config.py with correct credentials
+- CSV file must be named main.csv
 
-1. **Run the script:**
-
-   ```bash
-   python csv_to_mysql.py
-   ```
-
-2. **Enter the required information when prompted:**
-   - **Database name:** Enter the name of the database you want to use. If it doesn't exist, it will be created.
-   - **Table name:** Enter the name of the table where the data will be imported.
-   - **Column names:** Enter the column names separated by commas. These should match the columns in your CSV file.
+## How it works
+1. Reads CSV file
+2. Connects to MySQL
+3. Creates database if not exists
+4. Creates table based on CSV header
+5. Inserts data row by row
 
 ## Example
 
@@ -108,3 +114,7 @@ Here is an example of how to use the script:
    Database 'my_database' created successfully
    Data imported successfully.
    ```
+
+## Troubleshooting
+- If connection fails → check MySQL credentials
+- If table error → ensure column names match CSV header
